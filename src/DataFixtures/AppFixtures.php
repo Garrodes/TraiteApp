@@ -11,19 +11,20 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
-     private Generator $faker;
 
     public function load(ObjectManager $manager): void
     {
-        for($i = 0; $i<5; $i++)
-        {
-            $volumeCowHerd = new VolumeCowHerd;
-            $volumeCowHerd -> setVolume($this->faker->randomFloat(2));
-            
-        }
+        // for($i = 0; $i<5; $i++)
+        // {
+        //     $volumeCowHerd = new VolumeCowHerd();
+        //     $volumeCowHerd -> setVolume(mt_rand(300,900));
+        //     $manager->persist($volumeCowHerd);
+        // }
+
+
 
            
-        $manager->persist($volumeCowHerd);
+
 
         $manager->flush();
     }
