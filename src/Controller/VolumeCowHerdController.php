@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\VolumeCowHerd;
+use App\Form\VolumeCowHerdType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\VolumeCowHerdRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +31,35 @@ class VolumeCowHerdController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             10); /*limit per page*/
 
-        return $this->render('pages/milk.html.twig', [
+        return $this->render('pages/milk/milk.html.twig', [
             'milkVolumes' => $milkVolumes,
         ]);
+    }
+
+
+    #[Route('/milk/new','milk.new', methods:['GET', 'POST'])]
+    public function new(Request $request,
+    EntityManagerInterface $manager): Response
+    {
+        $milk = new VolumeCowHerd() ; 
+        $form = $this->createForm(VolumeCowHerdType::class, $milk);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+           $milk = $form->getData();
+           $manager -> persist($milk); //like a commit
+           $manager->flush(); // push
+
+            $this->addFlash(
+             'success',
+             'Votre relevé a été correctement ajouté'
+            ); 
+
+            return $this->redirectToRoute('app_volume_cow_herd');
+           
+        }
+
+        return $this->render('pages/milk/new.html.twig', [ 'form' => $form->createView()]);
     }
 }

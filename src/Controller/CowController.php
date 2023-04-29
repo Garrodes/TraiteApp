@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Cow;
+use App\Form\CowType;
 use App\Repository\CowRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +21,17 @@ class CowController extends AbstractController
             $repository -> findAll(), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10);
-        return $this->render('pages/cow.html.twig', [
+        return $this->render('pages/cow/cow.html.twig', [
             'Cows' => $cowList,
         ]);
+    }
+
+    #[Route('/cow/new','cow.new', methods:['GET', 'POST'])]
+    public function new(): Response
+    {
+        $cow = new Cow() ; 
+        $form = $this->createForm(CowType::class, $cow);
+
+        return $this->render('pages/cow/new.html.twig', [ 'form' => $form->createView()]);
     }
 }
