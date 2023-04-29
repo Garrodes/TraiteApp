@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title%} TraiteApp| Cow {%endblock%}
+
+{% block body %}
+<div class="card bg-light mb-3" style="max-width: 40rem;">
+    <div class="card-header"> Derniers relevés</div>
+    <div class="card-body">
+        <table class="table table-hover ">
+            <thead>
+              <tr>
+
+                <th scope="col">Troupeau</th>
+                <th scope="col">Numéro d'identification</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Race</th>
+                <th scope="col">Etat de santé</th>
+                <th scope="col">Date de Naissance</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for Cow in Cows %}
+                    <tr class="table-active">
+                        
+                        
+                        <td>{{Cow.name}}</td>
+                        <td>{{Cow.dob| date("Y/m/d")}}</td>
+                  
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+          <div class="navigation d-flex justify-content-center">
+            {{ knp_pagination_render(Cows) }}
+        </div>
+    </div>
+
+{% endblock %}

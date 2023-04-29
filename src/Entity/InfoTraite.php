@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\InfoTraiteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: InfoTraiteRepository::class)]
@@ -16,8 +18,13 @@ class InfoTraite
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $type = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $action = null;
+    #[ORM\ManyToMany(targetEntity: Cow::class, mappedBy: 'cow_infotraite')]
+    private Collection $cows;
+
+    public function __construct()
+    {
+        $this->cows = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -36,14 +43,29 @@ class InfoTraite
         return $this;
     }
 
-    public function getAction(): ?string
+    /**
+     * @return Collection<int, Cow>
+     */
+    public function getCows(): Collection
     {
-        return $this->action;
+        return $this->cows;
     }
 
-    public function setAction(?string $action): self
+    public function addCow(Cow $cow): self
     {
-        $this->action = $action;
+        if (!$this->cows->contains($cow)) {
+            $this->cows->add($cow);
+            $cow->addCowInfotraite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCow(Cow $cow): self
+    {
+        if ($this->cows->removeElement($cow)) {
+            $cow->removeCowInfotraite($this);
+        }
 
         return $this;
     }

@@ -36,9 +36,17 @@ class Cow
     #[ORM\OneToMany(mappedBy: 'ref_cow', targetEntity: Pesee::class)]
     private Collection $pesees;
 
+    #[ORM\ManyToMany(targetEntity: Health::class, inversedBy: 'cows')]
+    private Collection $cow_health;
+
+    #[ORM\ManyToMany(targetEntity: InfoTraite::class, inversedBy: 'cows')]
+    private Collection $cow_infotraite;
+
     public function __construct()
     {
         $this->pesees = new ArrayCollection();
+        $this->cow_health = new ArrayCollection();
+        $this->cow_infotraite = new ArrayCollection();
     }
 
 
@@ -121,6 +129,54 @@ class Cow
                 $pesee->setRefCow(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Health>
+     */
+    public function getCowHealth(): Collection
+    {
+        return $this->cow_health;
+    }
+
+    public function addCowHealth(Health $cowHealth): self
+    {
+        if (!$this->cow_health->contains($cowHealth)) {
+            $this->cow_health->add($cowHealth);
+        }
+
+        return $this;
+    }
+
+    public function removeCowHealth(Health $cowHealth): self
+    {
+        $this->cow_health->removeElement($cowHealth);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, InfoTraite>
+     */
+    public function getCowInfotraite(): Collection
+    {
+        return $this->cow_infotraite;
+    }
+
+    public function addCowInfotraite(InfoTraite $cowInfotraite): self
+    {
+        if (!$this->cow_infotraite->contains($cowInfotraite)) {
+            $this->cow_infotraite->add($cowInfotraite);
+        }
+
+        return $this;
+    }
+
+    public function removeCowInfotraite(InfoTraite $cowInfotraite): self
+    {
+        $this->cow_infotraite->removeElement($cowInfotraite);
 
         return $this;
     }
