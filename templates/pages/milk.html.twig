@@ -2,15 +2,30 @@
 
 {% block title %} Milk Stats {% endblock %}
 
-{% block body %}    
-    <div class="container">
-        <h1>Derniers relevés</h1>
-        {% for volume in volumes %}
-            
-            
-        {% endfor %}
+{% block body %} 
 
+<div class="card bg-light mb-3" style="max-width: 20rem;">
+    <div class="card-header"> Derniers relevés</div>
+    <div class="card-body">
+        <table class="table table-hover ">
+            <thead>
+              <tr>
+                <th scope="col">Date du relevé</th>
+                <th scope="col">Volume relevé</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for milkvolume in milkVolumes %}
+                    <tr class="table-active">
+                        <th scope="row">{{milkvolume.date | date("Y/m/d")}}</th>
+                        <td>{{milkvolume.volume}}
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+          <div class="navigation d-flex justify-content-center">
+            {{ knp_pagination_render(milkVolumes) }}
+        </div>
     </div>
-
 
 {% endblock %}
