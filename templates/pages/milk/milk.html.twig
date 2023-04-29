@@ -3,22 +3,40 @@
 {% block title %} Milk Stats {% endblock %}
 
 {% block body %} 
+<div class="container mt-4">
 
-<div class="card bg-light mb-3" style="max-width: 20rem;">
-    <div class="card-header"> Derniers relevés</div>
+
+
+{% for message in app.flashes('success') %}
+     <div class="alert-success">
+            {{ message }}
+    </div>
+    {% endfor %}
+
+<div class="card bg-light mb-3" style="max-width: 40rem;">
+    <div class="card-header"> Derniers relevés </div>
     <div class="card-body">
+      <a href="{{path('milk.new')}}" class="btn btn-primary"> Ajouter un relevé </a>
         <table class="table table-hover ">
             <thead>
               <tr>
                 <th scope="col">Date du relevé</th>
                 <th scope="col">Volume relevé</th>
+                <th scope="col">Edition</th>
+                <th scope="col">Suppression</th>
               </tr>
             </thead>
             <tbody>
                 {% for milkvolume in milkVolumes %}
                     <tr class="table-active">
                         <th scope="row">{{milkvolume.date | date("Y/m/d")}}</th>
-                        <td>{{milkvolume.volume}}
+                        <td>{{milkvolume.volume}}</td>
+                        <td>
+                          <a href="{{ path('milk.edit', { id: milkvolume.id })}}" class="btn btn-warning"> Modifier</a>
+                        </td>
+                        <td>
+                          <a href="{{ path('milk.delete', { id: milkvolume.id })}}" class="btn btn-danger"> Supprimer</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -27,5 +45,6 @@
             {{ knp_pagination_render(milkVolumes) }}
         </div>
     </div>
+  </div>
 
 {% endblock %}

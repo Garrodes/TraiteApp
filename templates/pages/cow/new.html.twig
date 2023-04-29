@@ -4,34 +4,12 @@
 
 <div class="container">
 
-{% for message in app.flashes('success') %}
-     <div class="alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
     <h1>Ajouter un Bovin</h1>
 
-    {{ form_start(form)}}
-    <div class="form-group">    
-            {{ form_label(form.volume)}}
-            {{ form_widget(form.volume)}}
-        <div class="form-error">
-            {{form_errors(form.volume)}}
-        </div>          
-      </div>
-      <div class="form-group">
-        {{ form_label(form.date)}}
-        {{ form_widget(form.date)}}
-        <div class="form-error">
-            {{form_errors(form.date)}}
-        </div>
-      </div>
-      <div class="form-group">
-        {{form_row(form.submit)}}
-      </div>
 
-        
-    {{ form_end(form)}}
-</div>
+    <div class="container">
+        <h1>Ajouter un Relevé</h1>
+    
+        {{ form(form)}}
 
 {% endblock %}

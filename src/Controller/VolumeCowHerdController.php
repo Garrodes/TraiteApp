@@ -37,6 +37,14 @@ class VolumeCowHerdController extends AbstractController
     }
 
 
+
+    /**
+     * This is a form to add ingredient
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/milk/new','milk.new', methods:['GET', 'POST'])]
     public function new(Request $request,
     EntityManagerInterface $manager): Response
@@ -61,5 +69,56 @@ class VolumeCowHerdController extends AbstractController
         }
 
         return $this->render('pages/milk/new.html.twig', [ 'form' => $form->createView()]);
+    }
+
+    #[Route('/milk/edition/{id}','milk.edit', methods:['GET', 'POST'])]
+    public function edit(
+        VolumeCowHerd $volumeCowHerd,
+        Request $request,
+        EntityManagerInterface $manager)
+        : Response  {
+       
+        $form = $this->createForm(VolumeCowHerdType::class, $volumeCowHerd);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+           $volumeCowHerd = $form->getData();
+           $manager -> persist($volumeCowHerd); 
+           $manager->flush(); 
+
+            $this->addFlash(
+             'success',
+             'Votre relevé a été correctement modifié'
+            ); 
+
+            return $this->redirectToRoute('app_volume_cow_herd');
+        }
+
+        return $this->render('pages/milk/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    //TODO : ADD a confirm button on delete
+    #[Route('/milk/suppression/{id}', 'milk.delete', methods:['GET'])]
+    public function delete(EntityManagerInterface $manager, VolumeCowHerd $volumeCowHerd) : Response
+    {
+        if(!$volumeCowHerd) {
+            $this->addFlash(
+                'success',
+                'Le relevé demandé n\' a pas été trouvé'
+               ); 
+        }
+
+        $manager->remove($volumeCowHerd) ;
+        $manager -> flush();
+
+        $this->addFlash(
+            'success',
+            'Votre relevé a été correctement supprimé'
+           ); 
+
+        return $this->redirectToRoute('app_volume_cow_herd');
     }
 }
