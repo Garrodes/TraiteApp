@@ -23,15 +23,19 @@ class CowController extends AbstractController
      * @return Response
      */
     #[Route('/cow', name: 'app_cow', methods:'GET')]
-    public function index(CowRepository $repository, PaginatorInterface $paginator, Request $request): Response
+    public function index(
+        CowRepository $repository,
+         PaginatorInterface $paginator,
+          Request $request): Response
     {
- 
-        $cowList = $paginator->paginate(
+        
+        $cows = $paginator->paginate(
            $repository -> findAll(), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            10);
+            10
+        );
         return $this->render('pages/cow/cow.html.twig', [
-            'Cows' => $cowList,
+            'Cows' => $cows,
         ]);
     }
 
@@ -45,9 +49,11 @@ class CowController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+
+            dd($form->getData()) ;
            $cow = $form->getData();
-           $manager -> persist($cow); //like a commit
-           $manager->flush(); // push
+           $manager -> persist($cow); 
+           $manager->flush(); 
 
             $this->addFlash(
              'success',

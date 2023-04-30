@@ -27,7 +27,11 @@
                         <td>{{Cow.name}}</td>
                        
                       <td>{{Cow.breed}}</td>
-                      <td>{{Cow.Cow_health }}</td> 
+                      <td>
+                        {% for health in Cow.healths %}
+                          <span> {{health.state}}</span>
+                        {% endfor %}
+                      </td>
                      <td>{{Cow.dob| date("Y/m/d")}}</td>
                     </tr>
                 {% endfor %}

@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CowRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Repository\CowRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert ;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CowRepository::class)]
 #[UniqueEntity('name')]
@@ -37,17 +37,14 @@ class Cow
     #[ORM\OneToMany(mappedBy: 'ref_cow', targetEntity: Pesee::class)]
     private Collection $pesees;
 
-    #[ORM\ManyToMany(targetEntity: Health::class, inversedBy: 'cows')]
-    private Collection $cow_health;
+    #[ORM\ManyToMany(targetEntity: Health::class)]
+    private Collection $healths;
 
-    #[ORM\ManyToMany(targetEntity: InfoTraite::class, inversedBy: 'cows')]
-    private Collection $cow_infotraite;
 
     public function __construct()
     {
         $this->pesees = new ArrayCollection();
-        $this->cow_health = new ArrayCollection();
-        $this->cow_infotraite = new ArrayCollection();
+        $this->healths = new ArrayCollection();
     }
 
 
@@ -137,48 +134,26 @@ class Cow
     /**
      * @return Collection<int, Health>
      */
-    public function getCow_health(): Collection
+    public function getHealths(): Collection
     {
-        return $this->cow_health;
+        return $this->healths;
     }
 
-    public function addCow_health(Health $cow_health): self
+    public function addHealth(Health $health): self
     {
-        if (!$this->cow_health->contains($cow_health)) {
-            $this->cow_health->add($cow_health);
+        if (!$this->healths->contains($health)) {
+            $this->healths->add($health);
         }
 
         return $this;
     }
 
-    public function removeCow_health(Health $cow_health): self
+    public function removeHealth(Health $health): self
     {
-        $this->cow_health->removeElement($cow_health);
-
-        return $this;
-    }
-    /**
-     * @return Collection<int, InfoTraite>
-     */
-    public function getCowInfotraite(): Collection
-    {
-        return $this->cow_infotraite;
-    }
-
-    public function addCowInfotraite(InfoTraite $cowInfotraite): self
-    {
-        if (!$this->cow_infotraite->contains($cowInfotraite)) {
-            $this->cow_infotraite->add($cowInfotraite);
-        }
+        $this->healths->removeElement($health);
 
         return $this;
     }
 
-    public function removeCowInfotraite(InfoTraite $cowInfotraite): self
-    {
-        $this->cow_infotraite->removeElement($cowInfotraite);
-
-        return $this;
-    }
 
 }

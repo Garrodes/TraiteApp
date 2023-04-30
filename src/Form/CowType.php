@@ -6,10 +6,12 @@ use App\Entity\Cow;
 use App\Entity\Herd;
 use App\Entity\Breed;
 use App\Entity\Health;
+use App\Entity\InfoTraite;
 use App\Repository\HealthRepository;
+use App\Repository\InfoTraiteRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -61,31 +63,45 @@ class CowType extends AbstractType
                    
                 ]]
                 )
-            ->add('cow_health', EntityType::class, [
-                       'class' => Health::class,
-                           'query_builder' => function (HealthRepository $er) {
-        return $er->createQueryBuilder('h')
+             ->add('healths', EntityType::class, [
+                        'class' => Health::class,
+                            'query_builder' => function (HealthRepository $er) {
+         return $er->createQueryBuilder('h')
             ->orderBy('h.state', 'ASC');
     },
-                'choice_label' => 'state' ,
-                'multiple' => true,
-                'expanded' => true,
-                'label' => 'Etat de santé de la vache ',
-                'label_attr' => [
-                    'class' => 'form-label'
-                ],
-                'mapped' => false,
-                'constraints' => [
-                   
-                ]]) 
+                 'choice_label' => 'state' ,
+                 'multiple' => true,
+                 'expanded' => true,
+                 'label' => 'Etat de santé de la vache ',
+                 'label_attr' => [
+                     'class' => 'form-label'
+                 ],
+                 
+                 ]) 
+//                 ->add('cow_infotraite', EntityType::class, [
+//                     'class' => InfoTraite::class,
+//                         'query_builder' => function (InfoTraiteRepository $er) {
+//      return $er->createQueryBuilder('i')
+//          ->orderBy('i.type', 'ASC');
+//  },
+//              'choice_label' => 'type' ,
+//              'multiple' => true,
+//              'expanded' => true,
+//              'label' => 'Info Traite',
+//              'label_attr' => [
+//                  'class' => 'form-label'
+//              ],
+//              'mapped' => false,
+//              'constraints' => [
+                
+//              ]]) 
             ->add('submit', SubmitType::class, [
                     'attr' => [
                         'class' => 'save btn btn-primary'
                     ],
                     'label' => 'Ajouter'
                     ])
-            // ->add('ref_herd')
-            // ->add('breed')
+
         ;
     }
 
