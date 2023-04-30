@@ -40,6 +40,10 @@ class Cow
     #[ORM\ManyToMany(targetEntity: Health::class)]
     private Collection $healths;
 
+   
+    #[ORM\Column(nullable: true)]
+    private ?int $idNat = null;
+
 
     public function __construct()
     {
@@ -151,6 +155,18 @@ class Cow
     public function removeHealth(Health $health): self
     {
         $this->healths->removeElement($health);
+
+        return $this;
+    }
+
+    public function getIdNat(): ?int
+    {
+        return $this->idNat;
+    }
+
+    public function setIdNat(?int $idNat): self
+    {
+        $this->idNat = $idNat;
 
         return $this;
     }

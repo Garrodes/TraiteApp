@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="container">
+    <h1> Modification du Relevé </h1>
+    {{ form_start(form)}}
+    <div class="form-group">    
+            {{ form_label(form.name)}}
+            {{ form_widget(form.name)}}
+        <div class="form-error">
+            {{form_errors(form.name)}}
+        </div>          
+      </div>
+      <div class="form-group">
+        {{ form_label(form.idNat)}}
+        {{ form_widget(form.idNat)}}
+        <div class="form-error">
+            {{form_errors(form.idNat)}}
+        </div>
+  </div>
+
+      <div class="form-group">
+        {{ form_label(form.dob)}}
+        {{ form_widget(form.dob)}}
+        <div class="form-error">
+            {{form_errors(form.dob)}}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.breed)}}
+            {{ form_widget(form.breed)}}
+            <div class="form-error">
+                {{form_errors(form.breed)}}
+            </div>
+      </div>
+      <div class="form-group">
+        {{ form_label(form.ref_herd)}}
+        {{ form_widget(form.ref_herd)}}
+        <div class="form-error">
+            {{form_errors(form.ref_herd)}}
+        </div>
+  </div>
+  {{ form_row(form.healths)}}
+
+</div>
+  
+      <div class="form-group">
+        {{ form_row(form.submit) }}
+      </div>
+        
+    {{ form_end(form)}}
+    </div>
+
+</div>
+
+
+
+
+
+{% endblock %}

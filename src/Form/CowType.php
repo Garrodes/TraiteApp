@@ -6,9 +6,7 @@ use App\Entity\Cow;
 use App\Entity\Herd;
 use App\Entity\Breed;
 use App\Entity\Health;
-use App\Entity\InfoTraite;
 use App\Repository\HealthRepository;
-use App\Repository\InfoTraiteRepository;
 use Symfony\Component\Form\AbstractType;
 
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,6 +14,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -30,7 +29,7 @@ class CowType extends AbstractType
                     'class' => 'form-label'
                 ],
                 'constraints' => [
-                
+                    new Assert\NotBlank(),
                 ]
             ])
             ->add('dob', DateType::class, [
@@ -60,7 +59,7 @@ class CowType extends AbstractType
                     'class' => 'form-label'
                 ],
                 'constraints' => [
-                   
+                    new Assert\NotBlank(),
                 ]]
                 )
              ->add('healths', EntityType::class, [
@@ -95,6 +94,16 @@ class CowType extends AbstractType
 //              'constraints' => [
                 
 //              ]]) 
+            ->add('idNat', NumberType::class,[
+                'label' => 'Numéro d\'Identification',
+                'label_attr' => [
+                    'class' => 'form-label'
+                ],
+                'html5'=>true,
+                'constraints' => [
+                
+                ]
+            ])
             ->add('submit', SubmitType::class, [
                     'attr' => [
                         'class' => 'save btn btn-primary'
