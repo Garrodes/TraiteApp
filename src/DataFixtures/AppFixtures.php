@@ -21,9 +21,7 @@ class AppFixtures extends Fixture
     //        $herd -> setName('race'.$i);
     //        $manager -> persist($herd) ;
     //    }
-
-
-
+  
            
 
 
