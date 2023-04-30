@@ -137,27 +137,26 @@ class Cow
     /**
      * @return Collection<int, Health>
      */
-    public function getCowHealth(): Collection
+    public function getCow_health(): Collection
     {
         return $this->cow_health;
     }
 
-    public function addCowHealth(Health $cowHealth): self
+    public function addCow_health(Health $cow_health): self
     {
-        if (!$this->cow_health->contains($cowHealth)) {
-            $this->cow_health->add($cowHealth);
+        if (!$this->cow_health->contains($cow_health)) {
+            $this->cow_health->add($cow_health);
         }
 
         return $this;
     }
 
-    public function removeCowHealth(Health $cowHealth): self
+    public function removeCow_health(Health $cow_health): self
     {
-        $this->cow_health->removeElement($cowHealth);
+        $this->cow_health->removeElement($cow_health);
 
         return $this;
     }
-
     /**
      * @return Collection<int, InfoTraite>
      */

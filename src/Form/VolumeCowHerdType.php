@@ -22,13 +22,12 @@ class VolumeCowHerdType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => '1',
-                    'maxlength' => '10'
+                    'maxlength' => '10',
                 ],
                 'label' => 'Volume (L)',
                 'label_attr' => [
                     'class' => 'form-label'
-                ],
-                
+                ],             
                 'constraints' => [
                     new Assert\Length(['min' => 1, 'max' => 10]),
                     new Assert\NotBlank(),

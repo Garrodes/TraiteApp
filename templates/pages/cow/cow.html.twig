@@ -3,6 +3,7 @@
 {% block title%} TraiteApp| Cow {%endblock%}
 
 {% block body %}
+<div class="container mt-4">
 <div class="card bg-light mb-3" style="max-width: 40rem;">
     <div class="card-header"> Derniers relevés</div>
     <div class="card-body">
@@ -22,10 +23,12 @@
                 {% for Cow in Cows %}
                     <tr class="table-active">
                         
-                        
+                      <td>{{Cow.RefHerd}}</td>
                         <td>{{Cow.name}}</td>
-                        <td>{{Cow.dob| date("Y/m/d")}}</td>
-                  
+                       
+                      <td>{{Cow.breed}}</td>
+                      <td>{{Cow.Cow_health }}</td> 
+                     <td>{{Cow.dob| date("Y/m/d")}}</td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -33,6 +36,8 @@
           <div class="navigation d-flex justify-content-center">
             {{ knp_pagination_render(Cows) }}
         </div>
+        <a href="{{path('cow.new')}}" class="btn btn-primary"> Ajouter un bovin</a>
     </div>
+  </div>
 
 {% endblock %}

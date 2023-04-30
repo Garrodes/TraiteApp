@@ -1,15 +1,56 @@
 {% extends "base.html.twig" %}
 
+
+{% block title %}  TraiteApp | Nouveau Bovin {% endblock %}
 {% block body %}
 
-<div class="container">
-
-    <h1>Ajouter un Bovin</h1>
-
-
     <div class="container">
-        <h1>Ajouter un Relevé</h1>
+        <h1>Ajouter un Bovin</h1>
     
-        {{ form(form)}}
+
+        {{ form_start(form)}}
+        <div class="form-group">    
+                {{ form_label(form.name)}}
+                {{ form_widget(form.name)}}
+            <div class="form-error">
+                {{form_errors(form.name)}}
+            </div>          
+          </div>
+          <div class="form-group">
+            {{ form_label(form.dob)}}
+            {{ form_widget(form.dob)}}
+            <div class="form-error">
+                {{form_errors(form.dob)}}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.breed)}}
+                {{ form_widget(form.breed)}}
+                <div class="form-error">
+                    {{form_errors(form.breed)}}
+                </div>
+          </div>
+          <div class="form-group">
+            {{ form_label(form.ref_herd)}}
+            {{ form_widget(form.ref_herd)}}
+            <div class="form-error">
+                {{form_errors(form.ref_herd)}}
+            </div>
+      </div>
+      {# <div class="form-group">
+        {{ form_label(form.cow_health)}}
+        {{ form_widget(form.cow_health)}}
+        <div class="form-error">
+            {{form_errors(form.cow_health)}}
+        </div> #}
+  </div>
+      
+          <div class="form-group">
+            {{ form_row(form.submit) }}
+          </div>
+            
+        {{ form_end(form)}}
+        </div>
+        
+        </div>
 
 {% endblock %}
