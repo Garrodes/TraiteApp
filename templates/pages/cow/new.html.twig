@@ -4,7 +4,7 @@
 {% block title %}  TraiteApp | Nouveau Bovin {% endblock %}
 {% block body %}
 
-    <div class="container">
+    <div class="container mt-4">
         <h1>Ajouter un Bovin</h1>
     
 
@@ -36,12 +36,13 @@
                 {{form_errors(form.ref_herd)}}
             </div>
       </div>
-      {# <div class="form-group">
-        {{ form_label(form.cow_health)}}
-        {{ form_widget(form.cow_health)}}
+      {{ form_row(form.cow_health)}}
+      <div class="form-group">
+      {#  {{ form_label(form.Cow_health)}}
+        {{ form_widget(form.Cow_health)}}
         <div class="form-error">
-            {{form_errors(form.cow_health)}}
-        </div> #}
+            {{form_errors(form.Cow_health)}} #}
+        </div> 
   </div>
       
           <div class="form-group">

@@ -55,7 +55,7 @@ class Health
     {
         if (!$this->cows->contains($cow)) {
             $this->cows->add($cow);
-            $cow->addCowHealth($this);
+            $cow->addCow_health($this);
         }
 
         return $this;
@@ -64,7 +64,7 @@ class Health
     public function removeCow(Cow $cow): self
     {
         if ($this->cows->removeElement($cow)) {
-            $cow->removeCowHealth($this);
+            $cow->removeCow_health($this);
         }
 
         return $this;
