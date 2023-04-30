@@ -92,7 +92,7 @@ class CowController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
            
-            dd($form->getData());
+          
             $cow = $form->getData();
            $manager -> persist($cow); 
            $manager->flush(); 
