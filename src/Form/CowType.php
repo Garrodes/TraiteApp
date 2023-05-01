@@ -9,17 +9,32 @@ use App\Entity\Health;
 use App\Repository\HealthRepository;
 use Symfony\Component\Form\AbstractType;
 
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+// use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CowType extends AbstractType
 {
+
+/*  Needed if I wanted the user to create a cow with his own health state that he defined which is not the case
+    It will be reused on a form to change a cow's herd 
+private $token; 
+
+    public function __construct(TokenStorageInterface $token)
+    {
+        $this->token = $token;
+    } */
+
+
+
+
     /**
      * form to add a new cow to db 
      *
@@ -73,7 +88,9 @@ class CowType extends AbstractType
                         'class' => Health::class,
                             'query_builder' => function (HealthRepository $er) {
          return $er->createQueryBuilder('h')
+            // ->where('i.user = :user')
             ->orderBy('h.state', 'ASC');
+            // ->setParameter('user', $this->token->getToken()->getUser());
     },
                  'choice_label' => 'state' ,
                  'multiple' => true,
