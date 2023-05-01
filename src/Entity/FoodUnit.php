@@ -32,4 +32,9 @@ class FoodUnit
 
         return $this;
     }
+
+    public function __toString()
+    {
+       $this->unit; 
+    }
 }

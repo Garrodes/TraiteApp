@@ -27,7 +27,7 @@ class VolumeCowHerdController extends AbstractController
     public function index( VolumeCowHerdRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $milkVolumes = $paginator->paginate(
-            $repository -> findAll(), /* query NOT result */
+            $repository -> findBy(['user'=>$this->getUser()]), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10); /*limit per page*/
 
@@ -56,6 +56,7 @@ class VolumeCowHerdController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
            $milk = $form->getData();
+           $milk->setUser($this->getUser());
            $manager -> persist($milk); //like a commit
            $manager->flush(); // push
 

@@ -32,7 +32,7 @@ class CowController extends AbstractController
     {
         
         $cows = $paginator->paginate(
-           $repository -> findAll(), /* query NOT result */
+           $repository -> findBy(['user'=>$this->getUser()]), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             10
         );
@@ -60,6 +60,8 @@ class CowController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
 
            $cow = $form->getData();
+            $cow->setUser($this->getUser());
+
            $manager -> persist($cow); 
            $manager->flush(); 
 

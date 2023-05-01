@@ -44,6 +44,10 @@ class Cow
     #[ORM\Column(nullable: true)]
     private ?int $idNat = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cows')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
 
     public function __construct()
     {
@@ -167,6 +171,18 @@ class Cow
     public function setIdNat(?int $idNat): self
     {
         $this->idNat = $idNat;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

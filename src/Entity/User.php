@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use App\EntityListener\UserListener;
@@ -52,10 +54,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cow::class, orphanRemoval: true)]
+    private Collection $cows;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: VolumeCowHerd::class, orphanRemoval: true)]
+    private Collection $volumecowherd;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable() ;
         $this->updatedAt = new \DateTimeImmutable() ;
+        $this->cows = new ArrayCollection();
+        $this->volumecowherd = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,6 +191,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cow>
+     */
+    public function getCows(): Collection
+    {
+        return $this->cows;
+    }
+
+    public function addCow(Cow $cow): self
+    {
+        if (!$this->cows->contains($cow)) {
+            $this->cows->add($cow);
+            $cow->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCow(Cow $cow): self
+    {
+        if ($this->cows->removeElement($cow)) {
+            // set the owning side to null (unless already changed)
+            if ($cow->getUser() === $this) {
+                $cow->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VolumeCowHerd>
+     */
+    public function getVolumecowherd(): Collection
+    {
+        return $this->volumecowherd;
+    }
+
+    public function addVolumecowherd(VolumeCowHerd $volumecowherd): self
+    {
+        if (!$this->volumecowherd->contains($volumecowherd)) {
+            $this->volumecowherd->add($volumecowherd);
+            $volumecowherd->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVolumecowherd(VolumeCowHerd $volumecowherd): self
+    {
+        if ($this->volumecowherd->removeElement($volumecowherd)) {
+            // set the owning side to null (unless already changed)
+            if ($volumecowherd->getUser() === $this) {
+                $volumecowherd->setUser(null);
+            }
+        }
 
         return $this;
     }

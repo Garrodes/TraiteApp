@@ -23,6 +23,10 @@ class VolumeCowHerd
     #[Assert\NotNull()]
     private ?\DateTime $date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'volumecowherd')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -48,6 +52,18 @@ class VolumeCowHerd
     public function setDate(\DateTime $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
