@@ -11,7 +11,7 @@ class HomeController extends AbstractController
 {
     /**
      * redirect to homepage, 
-     * @knowledge purpose : make a timestamp on logs via a an EventListener on an Event 
+     * knowledge purpose : make a timestamp on logs via a an EventListener on an Event 
      * 
      * 
      * @param EventDispatcherInterface $dispatcher

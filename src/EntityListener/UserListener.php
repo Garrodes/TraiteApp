@@ -1,17 +1,17 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EntityListener;
 
 use App\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
+
 
 class UserListener
 {
     private UserPasswordHasherInterface $hasher;
 
-    public function __construct(UserPasswordHasherInterface $hasher)
-     {
+    public function __construct( UserPasswordHasherInterface $hasher)
+    {
          $this->hasher = $hasher;
     } 
 
