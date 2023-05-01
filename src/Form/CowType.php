@@ -20,6 +20,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CowType extends AbstractType
 {
+    /**
+     * form to add a new cow to db 
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
