@@ -27,7 +27,8 @@ class CowController extends AbstractController
     public function index(
         CowRepository $repository,
          PaginatorInterface $paginator,
-          Request $request): Response
+          Request $request,
+          ): Response
     {
         
         $cows = $paginator->paginate(
