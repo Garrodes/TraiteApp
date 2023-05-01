@@ -56,8 +56,6 @@ class UserController extends AbstractController
                 );
 
             }
-          
-            
          }
  
 
@@ -67,9 +65,15 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     *  This controller allows us to edit user's password
+     * (php block doc not working zzzz)
+     */
     #[Route('/user/edit/pwd/{id}', 'user.edit.pwd', methods:['GET', 'POST'])]
-    public function editPassword(User $user, Request $request,
-    UserPasswordHasherInterface $hasher,EntityManagerInterface $manager):Response
+    public function editPassword(User $user, 
+    Request $request,
+    UserPasswordHasherInterface $hasher,
+    EntityManagerInterface $manager):Response
     {
         $form = $this->createForm(UserPasswordType::class);
 
@@ -80,13 +84,10 @@ class UserController extends AbstractController
            
             if($hasher->isPasswordValid($user, $form->getData()['plainPassword']))
             {
-              
-                $user ->setPassword(
-                    $hasher->hashPassword(
-                        $user, 
+                $user ->setUpdatedAt(new \DateTimeImmutable());
+                $user ->setPlainPassword(
                         $form->getData()['newPassword']
-                    )
-                    );
+                );
 
                $manager->persist($user);
                $manager->flush();
