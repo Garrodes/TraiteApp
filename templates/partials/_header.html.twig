@@ -10,9 +10,6 @@
             <a class="nav-link" href="{{ path('app_volume_cow_herd') }}">Relevés Lait</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="{{path('app_cow')}}">Mes vaches</a>
           </li>
           <li class="nav-item dropdown">
@@ -26,9 +23,10 @@
             </div>
           </li>
         </ul>
+        <button type="button" class="btn btn-primary"><a href="{{path('security.login')}}" class="nav-link">Connectez-vous</a></button>
         <form class="d-flex">
           <input class="form-control me-sm-2" type="search" placeholder="Search">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+          <button class="btn btn-secondary  my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
     </div>
