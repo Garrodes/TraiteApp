@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | InfoTraite {% endblock %}
+
+{% block body %}
+
+<div class="container mt-4">
+    {% for message in app.flashes('success') %}
+       <div class="alert-success">
+              {{ message }}
+      </div>
+      {% endfor %}
+      <div class="card bg-light mb-3" style="max-width: 40rem;">
+        <div class="card-header"> Dernières Infos </div>
+        <div class="card-body">
+          <a href="{{path('infotraite.new')}}" class="btn btn-primary"> Ajouter une Info </a>
+            <table class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th scope="col">Info</th>
+                    <th scope="col">Vache</th>
+                    <th scope="col">Suppression</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for infotraite in infotraites %}
+                        <tr class="table-active">
+                            <th scope="row">{{ infotraite.type }}</th>
+                            <td>{{ infotraite.relatedCow}}</td>
+                            <td>
+                              <a href="{{ path('infotraite.delete', { id: infotraite.id })}}" class="btn btn-danger"> Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+              <div class="navigation d-flex justify-content-center">
+                {{ knp_pagination_render(infotraites) }}
+            </div>
+        </div>
+      </div>
+
+{% endblock %}
