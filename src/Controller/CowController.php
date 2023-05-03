@@ -4,13 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Cow;
 use App\Form\CowType;
-use App\Repository\CowRepository;
 use Doctrine\ORM\EntityManager;
+use App\Repository\CowRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CowController extends AbstractController
@@ -24,6 +26,7 @@ class CowController extends AbstractController
      * @return Response
      */
     #[Route('/cow', name: 'app_cow', methods:'GET')]
+    #[IsGranted('ROLE_USER')]
     public function index(
         CowRepository $repository,
          PaginatorInterface $paginator,
@@ -49,6 +52,7 @@ class CowController extends AbstractController
      * @return Response
      */
     #[Route('/cow/new','cow.new', methods:['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request,
     EntityManagerInterface $manager): Response
     {
@@ -81,6 +85,7 @@ class CowController extends AbstractController
      * 
      */
     #[Route('/cow/edition/{id}','cow.edit', methods:['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER') and user === cow.getUSer()")]
     public function edit(
         Cow $cow, 
         Request $request,

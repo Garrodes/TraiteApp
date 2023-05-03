@@ -5,6 +5,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarColor03">
+        {% if app.user %}
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <a class="nav-link" href="{{ path('app_volume_cow_herd') }}">Relevés Lait</a>
@@ -13,20 +14,23 @@
             <a class="nav-link" href="{{path('app_cow')}}">Mes vaches</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{path('index.infotraite')}}">Info Traite</a>
+            <a class="nav-link" href="{{path('index.infotraite')}}"> Mes Infos Traite</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> {{app.user.fullName}}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <a class="dropdown-item" href="#">Editer mon profil</a>
+              <a class="dropdown-item" href="#">Modifier mon mot de passe</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
+              <a class="dropdown-item" href="#">Deconnexion</a>
             </div>
           </li>
         </ul>
+        <button type="button" class="btn btn-primary"><a href="{{path('security.logout')}}" class="nav-link">Deconnexion</a></button>
+        {% else %}
         <button type="button" class="btn btn-primary"><a href="{{path('security.login')}}" class="nav-link">Connectez-vous</a></button>
+        <button type="button" class="btn btn-primary"><a href="{{path('security.registration')}}" class="nav-link">Inscrivez-vous</a></button>
+        {% endif %}
         <form class="d-flex">
           <input class="form-control me-sm-2" type="search" placeholder="Search">
           <button class="btn btn-secondary  my-2 my-sm-0" type="submit">Search</button>

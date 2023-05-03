@@ -10,11 +10,14 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class InfoTraiteController extends AbstractController
 {
     #[Route('/infotraite', name: 'index.infotraite', methods:'GET')]
+    #[IsGranted('ROLE_USER')]
     public function index(InfoTraiteRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $infotraites = $paginator->paginate(
@@ -57,6 +60,7 @@ class InfoTraiteController extends AbstractController
     }
 
     #[Route('/infotraite/suppression/{id}', 'infotraite.delete', methods:['GET'])]
+    #[Security("is_granted('ROLE_USER') and user === infotraite.getUSer()")]
     public function delete(EntityManagerInterface $manager, InfoTraite $infotraite) : Response
     {
         if(!$infotraite) {

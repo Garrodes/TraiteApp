@@ -11,6 +11,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class VolumeCowHerdController extends AbstractController
@@ -24,6 +26,7 @@ class VolumeCowHerdController extends AbstractController
      * @return Response
      */
     #[Route('/milk', name: 'app_volume_cow_herd', methods: ('GET'))]
+    #[IsGranted('ROLE_USER')]
     public function index( VolumeCowHerdRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $milkVolumes = $paginator->paginate(
@@ -46,6 +49,7 @@ class VolumeCowHerdController extends AbstractController
      * @return Response
      */
     #[Route('/milk/new','milk.new', methods:['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request,
     EntityManagerInterface $manager): Response
     {
@@ -73,6 +77,7 @@ class VolumeCowHerdController extends AbstractController
     }
 
     #[Route('/milk/edition/{id}','milk.edit', methods:['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER') and user === volumeCowHerd.getUser()")]
     public function edit(
         VolumeCowHerd $volumeCowHerd,
         Request $request,
