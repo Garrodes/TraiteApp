@@ -25,7 +25,7 @@ class CowController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/cow', name: 'app_cow', methods:'GET')]
+    #[Route('/cow', name: 'app_cow', methods:['GET'])]
     #[IsGranted('ROLE_USER')]
     public function index(
         CowRepository $repository,
@@ -42,6 +42,37 @@ class CowController extends AbstractController
         return $this->render('pages/cow/cow.html.twig', [
             'Cows' => $cows,
         ]);
+    }
+
+    #[Route('/cow/public', name: 'indexPublic.cow', methods:'GET')]
+    public function indexPublic(
+        PaginatorInterface $paginator,
+        CowRepository $repository,
+        Request $request,
+    ):Response
+    {
+        $cows = $paginator->paginate(
+            $repository -> findPublicCow(null), /* query NOT result */
+             $request->query->getInt('page', 1), /*page number*/
+             10
+         );
+        return $this->render('pages/cow/index_public.html.twig',[
+            'Cows' => $cows ]);
+    }
+
+    
+    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true")]
+    #[Route('/cow/{id}', name: 'show.cow', methods:'GET')]
+    /**
+     * Allow us to sea the cow, is she is declared public 
+     *
+     * @param Cow $cow
+     * @return Response
+     */
+    public function show(Cow $cow):Response
+    {
+        return $this->render('pages/cow/show.html.twig',[
+            'Cow' => $cow ]);
     }
 
     /**

@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title%} {{parent()}} | {{Cow.name}} {%endblock%}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="card border-secondary mb-3" style="max-width: 20rem;">
+        <div class="card-header">{{Cow.name}}</div>
+        <div class="card-body">
+            <table>
+                <tr>
+                    <th>Numéro d'identification</th>
+                    <td>{{Cow.idNat}}</td>
+                </tr>
+                <tr>
+                    <th> Race </th>
+                    <td>{{Cow.breed}}</td>
+                </tr>
+                <tr>
+                    <th> Date de naissance</th>
+                    <td>{{Cow.dob| date("Y/m/d")}}</td>
+                </tr>
+                <tr>
+                    <th> Etat de santé </th>
+                    <td>
+                       
+                {% for health in Cow.healths %}
+                {{health.state}}
+                
+                {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th> Propriétaire</th>
+                    <td>{{ Cow.user}}</td>
+                </tr>
+            </table>      
+                  <button type="button" class="btn btn-primary">Contacter le propriétaire </button>
+            </div>
+
+</div>
+{% endblock %}

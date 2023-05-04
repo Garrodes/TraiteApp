@@ -39,6 +39,25 @@ class CowRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Finds all the public recipes based on the number of cows
+     *
+     * @param integer $nbCows
+     * @return array
+     */
+    public function findPublicCow(?int $nbCows):array
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->where('c.isPublic = 1')
+            ->orderBy('c.dob', 'DESC');
+    
+        if(!$nbCows === 0 || !$nbCows ===null){
+            $queryBuilder->setMaxResults($nbCows);
+        }
+          return $queryBuilder ->getQuery()
+                     ->getResult();
+    }
+
 //    /**
 //     * @return Cow[] Returns an array of Cow objects
 //     */
