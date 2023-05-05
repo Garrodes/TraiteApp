@@ -44,6 +44,15 @@ class CowController extends AbstractController
         ]);
     }
 
+
+    /**
+     * Display a list of cows set public 
+     *
+     * @param PaginatorInterface $paginator
+     * @param CowRepository $repository
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/cow/public', name: 'indexPublic.cow', methods:'GET')]
     public function indexPublic(
         PaginatorInterface $paginator,
@@ -61,14 +70,15 @@ class CowController extends AbstractController
     }
 
     
-    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true")]
-    #[Route('/cow/{id}', name: 'show.cow', methods:'GET')]
+
     /**
-     * Allow us to sea the cow, is she is declared public 
+     * Display the cow individual page, is she is declared public 
      *
      * @param Cow $cow
      * @return Response
      */
+    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true")]
+    #[Route('/cow/{id}', name: 'show.cow', methods:'GET')]
     public function show(Cow $cow):Response
     {
         return $this->render('pages/cow/show.html.twig',[

@@ -112,7 +112,7 @@ class VolumeCowHerdController extends AbstractController
     {
         if(!$volumeCowHerd) {
             $this->addFlash(
-                'success',
+                'error',
                 'Le relevé demandé n\' a pas été trouvé'
                ); 
         }

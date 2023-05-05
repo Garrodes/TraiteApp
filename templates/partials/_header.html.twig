@@ -8,13 +8,16 @@
         {% if app.user %}
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
+            <a class="nav-link" href="{{path('index.infotraite')}}"> Mes Infos Traite</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="{{ path('app_volume_cow_herd') }}">Relevés Lait</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{path('app_cow')}}">Mes vaches</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{path('index.infotraite')}}"> Mes Infos Traite</a>
+            <a class="nav-link" href="{{path('index.herd')}}"> Mes troupeaux</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> {{app.user.fullName}}</a>

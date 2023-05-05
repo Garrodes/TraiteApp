@@ -37,6 +37,9 @@ class Herd
     #[ORM\JoinColumn(nullable: false)]
     private ?FoodUnit $ref_foodUnit = null;
 
+    #[ORM\ManyToOne]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->cows = new ArrayCollection();
@@ -129,6 +132,18 @@ class Herd
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
 
