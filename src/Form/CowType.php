@@ -7,11 +7,13 @@ use App\Entity\Herd;
 use App\Entity\Breed;
 use App\Entity\Health;
 use App\Repository\HealthRepository;
+use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Form\AbstractType;
 
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -95,11 +97,10 @@ private $token;
                  'choice_label' => 'state' ,
                  'multiple' => true,
                  'expanded' => true,
-                 'label' => 'Etat de santé de la vache ',
+                 'label' => 'Etat de santé de la vache : ',
                  'label_attr' => [
                      'class' => 'form-label'
-                 ],
-                 
+                 ],     
                  ]) 
 //                 ->add('cow_infotraite', EntityType::class, [
 //                     'class' => InfoTraite::class,
@@ -127,6 +128,13 @@ private $token;
                 'constraints' => [
                 
                 ]
+            ])
+            ->add('isPublic', CheckboxType::class, [
+                'label'=>'Rendre les informations de ce bovin publiques ?',
+                'label_attr' => [
+                    'class' => 'form-label'
+                ],
+                'required' => 'false'
             ])
             ->add('submit', SubmitType::class, [
                     'attr' => [

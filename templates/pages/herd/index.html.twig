@@ -3,5 +3,48 @@
 {% block title %} {{parent()}} | Mes troupeaux {% endblock %}
 
 {% block body %}
+<div class="container mt-4">
+
+    {% for message in app.flashes('success') %}
+         <div class="alert-success">
+                {{ message }}
+        </div>
+        {% endfor %}
+    
+    <div class="card bg-light mb-3" style="max-width: 40rem;">
+        <div class="card-header"> Derniers relevés </div>
+        <div class="card-body">
+          <a href="{{path('new.herd')}}" class="btn btn-primary"> Ajouter un troupeau </a>
+            <table class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th scope="col">Nom du troupeau</th>
+                    <th scope="col">Consommation en eau d'un individu</th>
+                    <th scope="col">Consommation alimentaire d'un individu</th>
+                    <th scope="col">Modification</th>
+                    <th scope="col">Suppression</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for herd in herds %}
+                        <tr class="table-active">
+                            <th scope="row">{{ herd.name }}</th>
+                            <td>{{herd.water}}</td>
+                            <td>{{herd.food}}  {{herd.foodUnit}}</td>
+                            <td>
+                              <a href="{{ path('edit.herd', { id: herd.id })}}" class="btn btn-warning"> Modifier</a>
+                            </td>
+                            <td>
+                              <a href="{{ path('delete.herd', { id: herd.id })}}" class="btn btn-danger"> Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+              <div class="navigation d-flex justify-content-center">
+                {{ knp_pagination_render(herds) }}
+            </div>
+        </div>
+      </div>
 
 {% endblock %}

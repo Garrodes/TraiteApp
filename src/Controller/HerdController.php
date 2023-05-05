@@ -5,20 +5,28 @@ namespace App\Controller;
 use App\Entity\Herd;
 use App\Form\HerdType;
 use Doctrine\ORM\EntityManager;
+use App\Repository\HerdRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HerdController extends AbstractController
 {
     #[Route('/herd', name: 'index.herd')]
-    public function index(): Response
+    public function index( HerdRepository $repository, PaginatorInterface $paginator,Request $request): Response
     {
+        $herds = $paginator->paginate(
+            $repository -> findBy(['user'=>$this->getUser()]), /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            5);
+
         return $this->render('pages/herd/index.html.twig', [
-            'controller_name' => 'HerdController',
+            'herds' => $herds,
         ]);
     }
 
@@ -53,8 +61,8 @@ class HerdController extends AbstractController
         return $this->render('pages/herd/new.html.twig', [ 'form' => $form->createView()]);
     }
 
-    #[Route('/herd/edit', 'edit.herd', methods:['POST','GET'])]
-    #[IsGranted('ROLE_USER')]
+    #[Route('/herd/edit/{id}', 'edit.herd', methods:['POST','GET'])]
+    #[Security("is_granted('ROLE_USER') and user === herd.getUser()")]
     public function edit(
         Herd $herd,
         Request $request,
@@ -87,7 +95,7 @@ class HerdController extends AbstractController
     }
 
 
-    #[Route('/herd/new', 'new.herd', methods:['GET'])]
+    #[Route('/herd/delete', 'delete.herd', methods:['GET'])]
     #[IsGranted('ROLE_USER')]
     public function delete(EntityManager $manager, Herd $herd):Response
     {

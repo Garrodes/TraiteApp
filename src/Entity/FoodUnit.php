@@ -33,8 +33,8 @@ class FoodUnit
         return $this;
     }
 
-    public function __toString()
+    public function __toString():string
     {
-       $this->unit; 
+       return $this->unit; 
     }
 }

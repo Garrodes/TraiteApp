@@ -2,12 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\FoodUnit;
 use App\Entity\Herd;
+use App\Entity\FoodUnit;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -19,7 +20,7 @@ class HerdType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom du bovin ',
+                'label' => 'Nom du troupeau',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
@@ -27,13 +28,13 @@ class HerdType extends AbstractType
                     new Assert\NotBlank(),
                 ]
             ])
-            ->add('water_neededforone',NumberType::class, [
+            ->add('water',NumberType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => '1',
                     'maxlength' => '10',
                 ],
-                'label' => 'Eau nécessaire pour un élément',
+                'label' => 'Eau quotidienne nécessaire pour un individu (L)',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],             
@@ -42,13 +43,13 @@ class HerdType extends AbstractType
                     new Assert\NotBlank(),
                 ],
             ])
-            ->add('food_neededforone',NumberType::class, [
+            ->add('food',NumberType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => '1',
                     'maxlength' => '10',
                 ],
-                'label' => 'Quantité d\'aliments nécessaire pour un élement',
+                'label' => 'Quantité d\'aliments nécessaire à un individu au quotidien',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],             
@@ -57,7 +58,7 @@ class HerdType extends AbstractType
                     new Assert\NotBlank(),
                 ],
             ])
-            ->add('ref_foodUnit', EntityType::class, [
+            ->add('foodUnit', EntityType::class, [
                 'class' => FoodUnit::class,
                 'choice_label' => 'unit' ,
                 'label' => 'Unité',
@@ -74,6 +75,7 @@ class HerdType extends AbstractType
                     'label' => 'Créer ce troupeau'
                     ])
         ;
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void

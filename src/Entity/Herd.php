@@ -24,18 +24,18 @@ class Herd
 
     #[ORM\Column]
     #[Assert\Positive()]
-    private ?float $water_neededforone = null;
+    private ?float $water = null;
 
     #[ORM\Column]
     #[Assert\Positive()]
-    private ?float $food_neededforone = null;
+    private ?float $food = null;
 
     #[ORM\OneToMany(mappedBy: 'ref_herd', targetEntity: Cow::class)]
     private Collection $cows;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?FoodUnit $ref_foodUnit = null;
+    private ?FoodUnit $foodUnit = null;
 
     #[ORM\ManyToOne]
     private ?User $user = null;
@@ -63,26 +63,26 @@ class Herd
         return $this;
     }
 
-    public function getWaterNeededforone(): ?float
+    public function getWater(): ?float
     {
-        return $this->water_neededforone;
+        return $this->water;
     }
 
-    public function setWaterNeededforone(float $water_neededforone): self
+    public function setWater(float $water): self
     {
-        $this->water_neededforone = $water_neededforone;
+        $this->water = $water;
 
         return $this;
     }
 
-    public function getFoodNeededforone(): ?float
+    public function getFood(): ?float
     {
-        return $this->food_neededforone;
+        return $this->food;
     }
 
-    public function setFoodNeededforone(float $food_neededforone): self
+    public function setFood(float $food): self
     {
-        $this->food_neededforone = $food_neededforone;
+        $this->food = $food;
 
         return $this;
     }
@@ -117,14 +117,14 @@ class Herd
         return $this;
     }
 
-    public function getRefFoodUnit(): ?FoodUnit
+    public function getFoodUnit(): ?FoodUnit
     {
-        return $this->ref_foodUnit;
+        return $this->foodUnit;
     }
 
-    public function setRefFoodUnit(?FoodUnit $ref_foodUnit): self
+    public function setFoodUnit(?FoodUnit $foodUnit): self
     {
-        $this->ref_foodUnit = $ref_foodUnit;
+        $this->foodUnit = $foodUnit;
 
         return $this;
     }

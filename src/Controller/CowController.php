@@ -53,7 +53,7 @@ class CowController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/cow/public', name: 'indexPublic.cow', methods:'GET')]
+/*     #[Route('/cow/public', name: 'indexPublic.cow', methods:'GET')]
     public function indexPublic(
         PaginatorInterface $paginator,
         CowRepository $repository,
@@ -61,13 +61,13 @@ class CowController extends AbstractController
     ):Response
     {
         $cows = $paginator->paginate(
-            $repository -> findPublicCow(null), /* query NOT result */
-             $request->query->getInt('page', 1), /*page number*/
+            $repository -> findPublicCow(null);
+             $request->query->getInt('page', 1), 
              10
          );
         return $this->render('pages/cow/index_public.html.twig',[
             'Cows' => $cows ]);
-    }
+    } */
 
     
 
@@ -77,13 +77,13 @@ class CowController extends AbstractController
      * @param Cow $cow
      * @return Response
      */
-    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true")]
+/*     #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true")]
     #[Route('/cow/{id}', name: 'show.cow', methods:'GET')]
     public function show(Cow $cow):Response
     {
         return $this->render('pages/cow/show.html.twig',[
             'Cow' => $cow ]);
-    }
+    } */
 
     /**
      * Allow us to create a new cow
@@ -126,7 +126,7 @@ class CowController extends AbstractController
      * 
      */
     #[Route('/cow/edition/{id}','cow.edit', methods:['GET', 'POST'])]
-    #[Security("is_granted('ROLE_USER') and user === cow.getUSer()")]
+    #[Security("is_granted('ROLE_USER') and user === cow.getUser()")]
     public function edit(
         Cow $cow, 
         Request $request,
