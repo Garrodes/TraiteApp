@@ -6,21 +6,19 @@ use App\Entity\Cow;
 use App\Entity\Herd;
 use App\Entity\Breed;
 use App\Entity\Health;
-use App\Repository\HealthRepository;
 use App\Repository\HerdRepository;
-use Doctrine\DBAL\Types\BooleanType;
+use App\Repository\HealthRepository;
 use Symfony\Component\Form\AbstractType;
-
-
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CowType extends AbstractType
@@ -97,9 +95,7 @@ private $token;
                         'class' => Health::class,
                             'query_builder' => function (HealthRepository $er) {
          return $er->createQueryBuilder('h')
-            // ->where('i.user = :user')
             ->orderBy('h.state', 'ASC');
-            // ->setParameter('user', $this->token->getToken()->getUser());
     },
                  'choice_label' => 'state' ,
                  'multiple' => true,
@@ -109,23 +105,6 @@ private $token;
                      'class' => 'form-label'
                  ],     
                  ]) 
-//                 ->add('cow_infotraite', EntityType::class, [
-//                     'class' => InfoTraite::class,
-//                         'query_builder' => function (InfoTraiteRepository $er) {
-//      return $er->createQueryBuilder('i')
-//          ->orderBy('i.type', 'ASC');
-//  },
-//              'choice_label' => 'type' ,
-//              'multiple' => true,
-//              'expanded' => true,
-//              'label' => 'Info Traite',
-//              'label_attr' => [
-//                  'class' => 'form-label'
-//              ],
-//              'mapped' => false,
-//              'constraints' => [
-                
-//              ]]) 
             ->add('idNat', NumberType::class,[
                 'label' => 'Numéro d\'Identification',
                 'label_attr' => [
@@ -142,6 +121,13 @@ private $token;
                     'class' => 'form-label'
                 ],
                 'required' => 'false'
+            ])
+            ->add('imageFile', VichImageType::class,[
+                'label' => 'Photo de la vache ',
+                'label_attr' => [
+                    'class'=> 'form-label mt-4',
+                ],
+                'required' => false
             ])
             ->add('submit', SubmitType::class, [
                     'attr' => [
