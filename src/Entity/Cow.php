@@ -124,7 +124,7 @@ class Cow
     {
         if (!$this->pesees->contains($pesee)) {
             $this->pesees->add($pesee);
-            $pesee->setRefCow($this);
+            $pesee->setCow($this);
         }
 
         return $this;
@@ -134,8 +134,8 @@ class Cow
     {
         if ($this->pesees->removeElement($pesee)) {
             // set the owning side to null (unless already changed)
-            if ($pesee->getRefCow() === $this) {
-                $pesee->setRefCow(null);
+            if ($pesee->getCow() === $this) {
+                $pesee->setCow(null);
             }
         }
 

@@ -16,7 +16,7 @@ class Pesee
 
     #[ORM\ManyToOne(inversedBy: 'pesees')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Cow $ref_cow = null;
+    private ?Cow $cow = null;
 
     #[ORM\Column]
     private ?float $volume = null;
@@ -29,14 +29,14 @@ class Pesee
         return $this->id;
     }
 
-    public function getRefCow(): ?Cow
+    public function getCow(): ?Cow
     {
-        return $this->ref_cow;
+        return $this->cow;
     }
 
-    public function setRefCow(?Cow $ref_cow): self
+    public function setCow(?Cow $cow): self
     {
-        $this->ref_cow = $ref_cow;
+        $this->cow = $cow;
 
         return $this;
     }
