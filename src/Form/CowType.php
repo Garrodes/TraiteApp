@@ -7,6 +7,7 @@ use App\Entity\Herd;
 use App\Entity\Breed;
 use App\Entity\Health;
 use App\Repository\HealthRepository;
+use App\Repository\HerdRepository;
 use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Form\AbstractType;
 
@@ -20,19 +21,20 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-// use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CowType extends AbstractType
 {
 
 /*  Needed if I wanted the user to create a cow with his own health state that he defined which is not the case
-    It will be reused on a form to change a cow's herd 
+    It will be reused on a form to change a cow's herd */
 private $token; 
+
 
     public function __construct(TokenStorageInterface $token)
     {
         $this->token = $token;
-    } */
+    } 
 
 
 
@@ -76,6 +78,11 @@ private $token;
                    
                 ]])
             ->add('ref_herd',EntityType::class, [
+                'query_builder' => function(HerdRepository $h){
+                    return $h->createQueryBuilder('h')
+                    ->where('h.user = :user')
+                    ->setParameter('user', $this->token->getToken()->getUser());
+                },
                 'class' => Herd::class,
                 'choice_label' => 'name' ,
                 'label' => 'Troupeau',
