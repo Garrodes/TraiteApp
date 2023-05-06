@@ -3,16 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Cow;
+use App\Entity\Mark;
 use App\Form\CowType;
+use App\Form\MarkType;
 use Doctrine\ORM\EntityManager;
 use App\Repository\CowRepository;
+use App\Repository\MarkRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CowController extends AbstractController
@@ -77,12 +80,51 @@ class CowController extends AbstractController
      * @param Cow $cow
      * @return Response
      */
-     #[Security("is_granted('ROLE_USER') and cow.isIsPublic() === true")]
-    #[Route('/cow/{id}', name: 'show.cow', methods:'GET')]
-    public function show(Cow $cow):Response
+    #[Security("is_granted('ROLE_USER') and cow.isIsPublic() === true")]
+    #[Route('/cow/{id}', name: 'show.cow', methods:['GET', 'POST'])]
+    public function show(Cow $cow, 
+    Request $request, 
+    MarkRepository $markRepository,
+    EntityManagerInterface $manager):Response
     {
+        $mark = new Mark();
+
+        $form = $this->createForm(MarkType::class, $mark);
+
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted() && $form->isValid()){
+          $mark->setUser($this->getUser())
+          ->setCow($cow);
+
+          $existingMark = $markRepository -> findOneBy([
+            'user'=> $this->getUser(),
+            'cow' => $cow
+          ]);
+
+          
+          if(!$existingMark){
+            $manager->persist($mark);
+          }else{
+           $existingMark->setMark(
+            $form->getData()->getMark()
+           );
+          }
+
+          $manager ->flush();
+
+          $this->addFlash(
+            'success',
+            'Entité Notée ! '
+           ); 
+
+           return $this->redirectToRoute('show.cow', ['id' => $cow->getId()]);
+
+        }
         return $this->render('pages/cow/show.html.twig',[
-            'Cow' => $cow ]);
+            'Cow' => $cow,
+        'form' => $form->createView() ]);
     } 
 
     /**

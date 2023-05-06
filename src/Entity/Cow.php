@@ -51,11 +51,16 @@ class Cow
     #[ORM\Column]
     private ?bool $isPublic = null;
 
+    #[ORM\OneToMany(mappedBy: 'cow', targetEntity: Mark::class, orphanRemoval: true)]
+    private Collection $marks;
+
+    private ?float $average = null ;
 
     public function __construct()
     {
         $this->pesees = new ArrayCollection();
         $this->healths = new ArrayCollection();
+        $this->marks = new ArrayCollection();
     }
 
 
@@ -200,6 +205,59 @@ class Cow
         $this->isPublic = $isPublic;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Mark>
+     */
+    public function getMarks(): Collection
+    {
+        return $this->marks;
+    }
+
+    public function addMark(Mark $mark): self
+    {
+        if (!$this->marks->contains($mark)) {
+            $this->marks->add($mark);
+            $mark->setCow($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMark(Mark $mark): self
+    {
+        if ($this->marks->removeElement($mark)) {
+            // set the owning side to null (unless already changed)
+            if ($mark->getCow() === $this) {
+                $mark->setCow(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAverage()
+    {
+        $marks = $this ->marks;
+
+        if($marks->toArray() === []){
+            return $this->average = null ;
+        }
+
+        $total = 0;
+        foreach($marks as $mark){
+            $total += $mark->getMark();
+        }
+
+        $this->average = $total / count($marks) ;
+        
+        return $this->average ;
+    }
+
+    public function __toString()
+    {
+        return $this->name ;
     }
 
 
