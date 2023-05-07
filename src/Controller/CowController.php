@@ -81,7 +81,7 @@ class CowController extends AbstractController
      * @return Response
      */
     #[Security("is_granted('ROLE_USER') and cow.isIsPublic() === true")]
-    #[Route('/cow/{id}', name: 'show.cow', methods:['GET', 'POST'])]
+    #[Route('/cow/specs/{id}', name: 'show.cow', methods:['GET', 'POST'])]
     public function show(Cow $cow, 
     Request $request, 
     MarkRepository $markRepository,
@@ -134,7 +134,7 @@ class CowController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
-    #[Route('/cow/new','cow.new', methods:['GET', 'POST'])]
+    #[Route('/cow/new/',name:'cow.new', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function new(Request $request,
     EntityManagerInterface $manager): Response

@@ -38,7 +38,7 @@ class Cow
     #[ORM\ManyToOne(inversedBy: 'cows')]
     private ?Breed $breed = null;
 
-    #[ORM\OneToMany(mappedBy: 'ref_cow', targetEntity: Pesee::class)]
+    #[ORM\OneToMany(mappedBy: 'cow', targetEntity: Pesee::class)]
     private Collection $pesees;
 
     #[ORM\ManyToMany(targetEntity: Health::class)]
@@ -60,16 +60,15 @@ class Cow
 
     private ?float $average = null ;
 
-    #[Vich\UploadableField(mapping: 'cow_images', fileNameProperty: 'imageName',  size:'imageSize')]
+    #[Vich\UploadableField(mapping: 'cows', fileNameProperty: 'imageName',  size:'imageSize')]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $imageSize = null;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+
+    #[ORM\Column]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $updatedAt=null;
 
@@ -78,7 +77,7 @@ class Cow
         $this->pesees = new ArrayCollection();
         $this->healths = new ArrayCollection();
         $this->marks = new ArrayCollection();
-        $this->updatedAt = new \DateTimeImmutable() ;
+/*         $this->updatedAt = new \DateTimeImmutable() ; */
     }
 
 
@@ -305,14 +304,6 @@ class Cow
         return $this->imageName;
     }
 
-    public function setImageSize(?int $imageSize): void
-    {
-        $this->imageSize = $imageSize;
-    }
-
-    public function getImageSize(): ?int
-    {
-        return $this->imageSize;
-    }
+    
 
 }
