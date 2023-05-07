@@ -1,0 +1,11 @@
+{% extends "pages/emails/layout.html.twig" %}
+
+{% block body %} 
+<div class="container mt-4">
+    <h1> Expediteur : {{ contact.fullName }}</h1>
+    <p>Email : {{ contact.email }}</p>
+    <p> Sujet : {{ contact.subject }}</p>
+    <p> Message: {{ contact.message | raw}}/p>
+</div>
+
+{% endblock %}

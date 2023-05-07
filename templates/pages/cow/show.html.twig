@@ -10,12 +10,12 @@
     </div>
     {% endfor %}
 
-    <div class="card border-secondary mb-3" style="max-width: 20rem;">
+    <div class="card border-secondary mb-3 mt-4" style="max-width: 20rem;">
         <div class="card-header">{{Cow.name}}</div>
         <div class="card-body">
             <div>
-                <th> Image </th>
-                <td><img src="{{ vich_uploader_asset(Cow, 'imageFile') }}" style="width: 100%;" alt=""></td>
+               
+                <img src="{{ vich_uploader_asset(Cow, 'imageFile') }}" style="width: 100%;" alt="">
             </div>
             <table>
                 <tr>

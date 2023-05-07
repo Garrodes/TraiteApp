@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{parent()}}| Contact Us {% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    {% for message in app.flashes('success') %}
+    <div class="alert-success">
+           {{ message }}
+   </div>
+   {% endfor %}
+{{form(form)}}
+</div>
+{% endblock %}
