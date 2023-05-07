@@ -58,15 +58,18 @@ class ContactController extends AbstractController
                 'expiration_date' => new \DateTime('+7 days'),
                 'contact' => $contact,
             ]);
-
-
             $mailer->send($email);
 
             $this->addFlash(
              'success',
              'Message Envoyé ! '
             ); 
-
+            return $this->redirectToRoute('index.contact');
+        }else{
+            $this->addFlash(
+                'error',
+                $form->getErrors()
+            );
         }
         return $this->render('pages/contact/index.html.twig', [
            'form' => $form->createView(),
