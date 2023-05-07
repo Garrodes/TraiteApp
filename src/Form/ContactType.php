@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints as Assert;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 
 class ContactType extends AbstractType
 {
@@ -77,7 +79,12 @@ class ContactType extends AbstractType
                 ],
                 'label' => 'Envoyer mon message'
                 ])
-        ;
+                ->add('captcha', Recaptcha3Type::class, [
+                    'constraints' => new Recaptcha3(['message' => 'Problemes avec votre captcha. Essayez à nouveau ou contactez-nous']),
+                    'action_name' => 'contact'
+                ])
+           ;
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
