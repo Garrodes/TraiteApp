@@ -6,6 +6,7 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class UserCrudController extends AbstractCrudController
@@ -34,7 +35,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('email')
                 ->setFormTypeOption('disabled','disabled'),
             TextField::new('pseudo'),
-            TextField::new('roles')
+            ArrayField::new('roles')
                 ->hideOnIndex(),
         ];
     }

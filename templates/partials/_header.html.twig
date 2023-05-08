@@ -27,6 +27,11 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Deconnexion</a>
             </div>
+            {% if 'ROLE_ADMIN' in app.user.roles %}
+            <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{path('index.admin')}}">Administration du site</a>
+            </div>
+            {% endif %}
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{path('indexPublic.cow')}}"> Fiches partagées</a>

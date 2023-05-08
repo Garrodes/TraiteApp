@@ -26,6 +26,16 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+      $admin = new User();
+      $admin->setFullName('Admin')
+        ->setPseudo(null)
+        ->setEmail('master@traiteapp.org')
+        ->setRoles(['ROLE_USER','ROLE_ADMIN'])
+        ->setPlainPassword('pwd');
+      
+        $manager->persist($admin);
+
+        $manager->flush();
        /*  // food unit
         $unit = new FoodUnit();
         $unit->setUnit('kg');
