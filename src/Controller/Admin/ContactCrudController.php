@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Contact;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -25,8 +26,9 @@ class ContactCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Message')
             ->setDateTimeFormat('%%y %%m %%d')
             ->setPageTitle("index", "TraiteApp | msg ")
-            ->setPaginatorPageSize(15);
-            
+            ->setPaginatorPageSize(15)
+
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
     }
 
     
@@ -37,7 +39,9 @@ class ContactCrudController extends AbstractCrudController
             TextField::new('fullName'),
             TextField::new('email')->setFormTypeOption('disabled','disabled'),
             TextField::new('subject'),
-            TextareaField::new('message')->hideOnIndex(),
+            TextareaField::new('message')
+                ->setFormType(CKEditorType::class)
+                ->hideOnIndex(),
             DateTimeField::new('createdAt')->setFormTypeOption('disabled','disabled'),
         ];
     }
