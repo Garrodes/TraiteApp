@@ -4,14 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+
 
 class ContactController extends AbstractController
 {
@@ -19,7 +18,8 @@ class ContactController extends AbstractController
     public function index(
         Request $request,
         EntityManagerInterface $manager,
-        MailerInterface $mailer): Response
+        MailService $mailService,
+        ): Response
     {
         $contact = new Contact();
 
@@ -41,24 +41,13 @@ class ContactController extends AbstractController
             $manager -> persist($contact); 
             $manager->flush(); 
 
-            // mail 
-            $email = (new TemplatedEmail())
-            ->from($contact->getEmail())
-            ->to('master@traiteapp.org')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject($contact->getSubject())
-                // path of the Twig template to render
-            ->htmlTemplate('pages/emails/contact.html.twig')
 
-    // pass variables (name => value) to the template
-            ->context([
-                'expiration_date' => new \DateTime('+7 days'),
-                'contact' => $contact,
-            ]);
-            $mailer->send($email);
+            $mailService->sendEmail(
+                $contact->getEmail(),
+                $contact->getSubject(),
+                'emails/contact.html.twig',
+                ['contact'=>$contact]
+            );
 
             $this->addFlash(
              'success',
