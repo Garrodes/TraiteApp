@@ -66,8 +66,6 @@ class Cow
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
 
-
-
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $updatedAt=null;
@@ -77,7 +75,7 @@ class Cow
         $this->pesees = new ArrayCollection();
         $this->healths = new ArrayCollection();
         $this->marks = new ArrayCollection();
-/*         $this->updatedAt = new \DateTimeImmutable() ; */
+       $this->updatedAt = new \DateTimeImmutable() ;
     }
 
 
@@ -304,6 +302,14 @@ class Cow
         return $this->imageName;
     }
 
-    
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt; 
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+      return $this->updatedAt = $updatedAt;
+    }
 
 }
