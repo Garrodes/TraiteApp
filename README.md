@@ -9,6 +9,10 @@ Application : TraiteApp :  <br>
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     -décider de partager les informations d'une vache aux autres utlisateurs : <br>
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     -elle pourra etre soumise au vote des autres utilisateurs <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    - un autre utilisateur pourra contacter le propriétaire pour un quelconque motif (information, échange, achat ..) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -contacter par mail l'administrateur du site via un formulaire <br>
+Partie administration (easyAdmin) : <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -configurer les informations d'un utilisateur via un dashboard et un formulaire <br>
+
 
 Sources : <br>
  Feuille de style : https://bootswatch.com/litera/  <br>
