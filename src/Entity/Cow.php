@@ -60,7 +60,7 @@ class Cow
 
     private ?float $average = null ;
 
-    #[Vich\UploadableField(mapping: 'cows', fileNameProperty: 'imageName',  size:'imageSize')]
+    #[Vich\UploadableField(mapping: 'cows', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]

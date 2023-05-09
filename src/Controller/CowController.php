@@ -103,7 +103,6 @@ class CowController extends AbstractController
             'cow' => $cow
           ]);
 
-          
           if(!$existingMark){
             $manager->persist($mark);
           }else{

@@ -24,6 +24,7 @@ class HerdController extends AbstractController
             $repository -> findBy(['user'=>$this->getUser()]), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             5);
+        
 
         return $this->render('pages/herd/index.html.twig', [
             'herds' => $herds,

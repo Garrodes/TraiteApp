@@ -40,6 +40,8 @@ class Herd
     #[ORM\ManyToOne]
     private ?User $user = null;
 
+    private int $cowCount;
+
     public function __construct()
     {
         $this->cows = new ArrayCollection();
@@ -144,6 +146,11 @@ class Herd
         $this->user = $user;
 
         return $this;
+    }
+
+    public function getCowCount()
+    {
+        return $this->cowCount = $this->cows->count();   
     }
 
 

@@ -11,7 +11,7 @@
         </div>
         {% endfor %}
     
-    <div class="card bg-light mb-3" style="max-width: 40rem;">
+    <div class="card bg-light mb-3" style="max-width: 50rem;">
         <div class="card-header"> Derniers relevés </div>
         <div class="card-body">
           <a href="{{path('new.herd')}}" class="btn btn-primary"> Ajouter un troupeau </a>
@@ -21,6 +21,7 @@
                     <th scope="col">Nom du troupeau</th>
                     <th scope="col">Consommation en eau d'un individu</th>
                     <th scope="col">Consommation alimentaire d'un individu</th>
+                    <th scope="col">Nombre d'individus</th>
                     <th scope="col">Modification</th>
                     <th scope="col">Suppression</th>
                   </tr>
@@ -31,6 +32,7 @@
                             <th scope="row">{{ herd.name }}</th>
                             <td>{{herd.water}}</td>
                             <td>{{herd.food}}  {{herd.foodUnit}}</td>
+                            <td>{{herd.cowCount}}</td>
                             <td>
                               <a href="{{ path('edit.herd', { id: herd.id })}}" class="btn btn-warning"> Modifier</a>
                             </td>
