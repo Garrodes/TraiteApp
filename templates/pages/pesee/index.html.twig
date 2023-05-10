@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} | Pesées{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <table>
+            <tr>
+                <th>Nom de la vache</th>
+                <th>Volume de la pesée</th>
+            </tr>
+            {% for cow in cows%}
+                {{ cow.pesees}}
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

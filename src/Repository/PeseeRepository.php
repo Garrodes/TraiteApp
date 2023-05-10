@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Pesee;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Pesee>
@@ -38,6 +39,7 @@ class PeseeRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
 
 //    /**
 //     * @return Pesee[] Returns an array of Pesee objects
